@@ -11,6 +11,20 @@
 
 #include <stdio.h>
 
+typedef struct {
+
+	char start;
+	char end;
+
+} Basic_Range_T;
+
+#define BASIC_TYPE_RANGE
+#define BASIC_TYPE_STRING
+#define BASIC_TYPE_INT
+#define BASIC_TYPE_FLOAT
+#define BASIC_TYPE_DOUBLE;
+#define BASIC_TYPE_CHAR;
+
 class Parser;
 
 extern "C" bool IsValidRangeCharacter(char c);
