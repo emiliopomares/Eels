@@ -5,8 +5,12 @@ class StateNode {
 
 public:
 	StateNode();
+	~StateNode();
 
-	std::vector<std::stack<Rule>> state;
-	StateNode *parent;
+	std::vector<std::stack<Rule *>> rule;
+	StateNode *sibling;
+
+	int NumRules();
+	Rule *GetRule(int idx);
 
 }
