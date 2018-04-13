@@ -6,8 +6,8 @@
 //  Copyright © 2018 DDI. All rights reserved.
 //
 
-#ifndef Builtin_hpp
-#define Builtin_hpp
+#ifndef BUILTIN_DEF
+#define BUILTIN_DEF
 
 #include <stdio.h>
 
@@ -18,12 +18,12 @@ typedef struct {
 
 } Basic_Range_T;
 
-#define BASIC_TYPE_RANGE
-#define BASIC_TYPE_STRING
-#define BASIC_TYPE_INT
-#define BASIC_TYPE_FLOAT
-#define BASIC_TYPE_DOUBLE;
-#define BASIC_TYPE_CHAR;
+#define BASIC_TYPE_RANGE 0
+#define BASIC_TYPE_STRING 1
+#define BASIC_TYPE_INT 2
+#define BASIC_TYPE_FLOAT 3
+#define BASIC_TYPE_DOUBLE 4
+#define BASIC_TYPE_CHAR 5
 
 class Parser;
 
@@ -34,3 +34,5 @@ extern "C" int DetectString(Parser *p);
 
 
 #endif /* Builtin_hpp */
+
+

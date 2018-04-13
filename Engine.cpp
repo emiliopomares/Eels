@@ -1,5 +1,8 @@
+#include <iostream>
+
 #include "Segment.hpp"
 #include "Sequence.hpp"
+#include "MetaActions.hpp"
 #include "Datatype.hpp"
 
 void Engine::FillInMetaRules() {
@@ -10,43 +13,71 @@ void Engine::FillInMetaRules() {
 	//state->AddSegment(Segment::CreateLiteral(":="));
 	//state->
 
+
+//======================== TEST ==========================
 	// test stuff, remove later: let's make it just an adding machine for now
 	int sym = symTable->RegisterSymbol("addition");
-	state->AddRule(sym);
-	state->AddSegment(Segment::Integer());
-	state->AddSegment(Segment::Literal("+"));
-	state->AddSegment(Segment::Integer());
+	Rule *r = AddRule(sym);
+	r->AddSegment(Segment::Integer());
+	r->AddSegment(Segment::Literal("+"));
+	r->AddSegment(Segment::Integer());
+	r->SetAction(onAdditionComplete);
+//======================== TEST ==========================
 
-	Action *act = new Action();
-	act->AddOp(Action::Plus);
-	act->AddParam(0, 0);
-	act->AddParam(1, 2);
-	act->AddOp(Action::Print);
-	act->AddParam(0);
-	state->AddAction(act);
+
 
 }
 
-void Engine::Initialize(StreamReader *strin, StreamWriter *strout) {
+Rule *Engine::AddRule(int sym) {
 
-	state = new StateNode();
+	Rule *newRule = new Rule();
+	rules.push_back(newRule);
+	return newRule;
+	
+}
+
+StreamWriter *Engine::GetStreamWriter() {
+
+	return out;
+
+}
+
+void Engine::Initialize() {
+
+	rules.clear();
 	symTable = new SymbolTable();
 	FillInMetaRules();
-
-	parser = new Parser(strin);
-	out = strout;
+	//state = new StateNode(&rules);
+	
 
 }
 
-void Engine::Process() {
+int Engine::Process() {
 
 	int r;
 	r = Step();
-	while(r!=PARSER_EOS) {
+	while(r!=PARSE_EOS) {
 
 		r = Step();
 
 	}
+	return 0;
+
+}
+
+int Engine::NumRules() {
+
+	return rules.size();
+
+}
+
+Engine::Engine(StreamReader *strin, StreamWriter *strout) {
+
+	parser = new Parser(strin);
+	out = strout;
+	Initialize();
+
+	std::cout << "new Engine created\n";
 
 }
 
@@ -59,10 +90,14 @@ int Engine::Step() {
 		skip = parser->DetectInteger();
 		if(skip > 0) {
 
-			parser->push(SymbolTable::Builtin_Integer);
 			Datatype d;
+			d.SymbolID = SymbolTable::Builtin_Integer;
+			d.type = DT_SYMBOL;
+			parser->push(d);
+		
+
 			d.type = DT_INT;
-			d.basic.int_val = atoi(parser->Extract());
+			d.basic.int_val = 0; //atoi(parser->Extract().c_str());
 			parser->SetValueAtHead(d);
 
 			return PARSE_CONTINUE;
@@ -72,10 +107,13 @@ int Engine::Step() {
 		skip = parser->DetectNonTerminal();
 		if(skip > 0) {
 
-			parser->push(SymbolTable::Builtin_NonTerminal);
 			Datatype d;
+			d.SymbolID = SymbolTable::Builtin_NonTerminal;
+			d.type = DT_SYMBOL;
+			parser->push(d);
+		
 			d.type = DT_STRING;
-			d.basic.str_val = new String(parser->Extract());
+			d.basic.str_val = ""; //parser->Extract();
 			parser->SetValueAtHead(d);
 
 			return PARSE_CONTINUE;
@@ -83,10 +121,13 @@ int Engine::Step() {
 		}
 
 		// if all else fails...
-		parser->push(SymbolTable::Builtin_Char);
+
+		
 		Datatype d;
-		d.type = DT_CHAR;
+		d.SymbolID = SymbolTable::Builtin_Char;
+		d.type = DT_SYMBOL;
 		d.basic.char_val = parser->GetChar();
+		parser->push(d);
 
 		return PARSE_CONTINUE;
 	}
@@ -100,6 +141,7 @@ int Engine::Step() {
 		r->AttemptAdvance(parser->GetSymbol());
 		if(r->IsCompleted()) {
 
+			r->onCompleted(r, this, 0);
 			parser->push(r->GetSymbol());
 			Datatype d = r->GetData();
 			state->RemoveFromStack(r->GetIndex());
@@ -109,5 +151,7 @@ int Engine::Step() {
 		}
 
 	}
+
+	return PARSE_CONTINUE;
 
 }

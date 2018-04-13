@@ -6,68 +6,97 @@
 //  Copyright © 2018 DDI. All rights reserved.
 //
 
+#include "StreamReader.hpp"
 #include "Parser.hpp"
 #include <cstring>
 #include <cstdio>
+#include <iostream>
 
 Parser::Parser() {
     
+    reader = NULL;
+
     headIndex = -1;
     buffer = NULL;
     length = 0;
+
+    std::cout << "New parser created\n";
     
 }
 
-Parser::Parser(FILE *f) {
+
+Parser::Parser(StreamReader *r) {
     
-    std::fseek(f, 0, SEEK_END);
-    long fileLength = ftell(f);
-    std::rewind(f);
-    buffer = new char[fileLength+1];
-    std::fread(buffer, 1, fileLength, f);
-    buffer[fileLength-1] = PARSER_EOB;
-    length = fileLength;
-    headIndex = 0;
+    reader = r;
+
+    headIndex = -1;
+    buffer = NULL;
+    length = 0;
+
+    std::cout << "New parser created\n";
     
 }
 
-/// Reference the passed buffer
-Parser::Parser(char *buf, long l) {
-    
-    length = l;
-    buffer = buf;
-    headIndex = 0;
-    
-}
+void Parser::SetValueAtHead(Datatype d) {
 
-/// Optionally copy the passed buffer
-Parser::Parser(char *buf, long l, bool copy) {
-    
-    if(copy) {
-        
-        buffer = new char[l+1];
-        std::memcpy(buffer, buf, l);
-        buffer[l-1] = PARSER_EOB;
-        headIndex = 0;
-    
-    }
-    else Parser(buf, l);
+    headValue = d;
 
 }
+
+void Parser::push(Datatype symbol) {
+
+
+}
+
+Datatype Parser::GetSymbol() {
+
+    return headValue;
+
+}
+
+int Parser::DetectInteger() {
+
+    return 0;
+
+}
+
+int Parser::DetectNonTerminal() {
+
+    return 0;
+
+}
+
+bool Parser::HeadIsEmpty() {
+
+    return true;
+
+}
+
+std::string Extract() {
+
+    return "";
+
+}
+
 
 Parser::~Parser() {
     
-    delete[] buffer;
     headIndex = -1;
     length = 0;
     
+}
+
+char Parser::GetChar() {
+
+    return reader->GetCharAt(headIndex);
+
 }
 
 char Parser::CharAt(int offset) {
     
     long effectiveOffset = headIndex + offset;
     if(effectiveOffset < length)
-        return buffer[effectiveOffset];
+        return reader->GetCharAt(effectiveOffset);
     
     else return PARSER_EOB;
         

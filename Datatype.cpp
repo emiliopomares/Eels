@@ -16,7 +16,7 @@ void Datatype::GetValue(void *dest) {
 /// will leave *dest untouched if cannot get field
 Field Datatype::GetField(std::string name) {
 
-	for(int i = 0; i < fields.Num(); ++i) {
+	for(int i = 0; i < fields.size(); ++i) {
 
 		if(fields[i].name == name) {
 
@@ -32,7 +32,7 @@ Field Datatype::GetField(std::string name) {
 
 Field Datatype::GetField(int n) {
 
-	if(fields.Num() > n) return fields[n];
+	if(fields.size() > n) return fields[n];
 
 	return InvalidField;
 
@@ -40,6 +40,6 @@ Field Datatype::GetField(int n) {
 
 int Datatype::NumFields() {
 
-	return fields.Num();
+	return fields.size();
 
 }

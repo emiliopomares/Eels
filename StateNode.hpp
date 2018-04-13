@@ -1,16 +1,29 @@
+#ifndef STATENODE_DEF
+#define STATENODE_DEF
+
+#include "Rule.hpp"
+#include "RuleActivation.hpp"
 #include <vector>
 #include <stack>
 
 class StateNode {
 
+private:
+	std::vector<Rule *>* rule;
+
 public:
-	StateNode();
+	StateNode(std::vector<Rule *>*rulelist);
 	~StateNode();
 
-	std::vector<std::stack<Rule *>> rule;
+	int NumRules();
+	void AddRule();
+	Rule *GetRule(int i);
+	void RemoveFromStack(int i);
+
+	std::vector<std::stack<RuleActivation *> *> activation;
 	StateNode *sibling;
 
-	int NumRules();
-	Rule *GetRule(int idx);
 
-}
+};
+
+#endif
