@@ -6,6 +6,9 @@
 #include <vector>
 #include <stack>
 
+class Rule;
+class RuleActivation;
+
 class StateNode {
 
 private:
@@ -18,6 +21,7 @@ public:
 	int NumRules();
 	void AddRule();
 	Rule *GetRule(int i);
+	RuleActivation *GetActivation(int i);
 	void RemoveFromStack(int i);
 
 	std::vector<std::stack<RuleActivation *> *> activation;

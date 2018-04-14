@@ -50,6 +50,7 @@ char FileStreamReader::GetCharAt(int off) {
 
 	if(off < size) {
 		
+		//std::cout << "GetCharAt: " << off << " = " << data[off] << "\n";
 		return data[off];
 
 	}

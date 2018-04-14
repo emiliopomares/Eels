@@ -27,6 +27,7 @@ int main(int argc, const char * argv[]) {
      writer = new ConsoleStreamWriter();
     
    	 Engine *e = new Engine(reader, writer);
+   	 e->Process();
 	}
 
     return 0;

@@ -10,6 +10,7 @@
 
 #define PARSE_OK 0
 #define PARSE_CONTINUE 2
+#define PARSE_END -3
 #define PARSE_EOS -1
 
 class StateNode;
@@ -35,6 +36,8 @@ public:
 
 	void AttachReader(StreamReader *r);
 	void AttachWriter(StreamWriter *w);
+
+	void AttemptAdvanceRule(int rulenum, Symboltype s);
 
 	int Process();
 

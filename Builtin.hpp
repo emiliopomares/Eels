@@ -31,6 +31,7 @@ extern "C" bool IsValidRangeCharacter(char c);
 extern "C" int DetectLabelCharacter(Parser *p);
 extern "C" int DetectRange(Parser *p);
 extern "C" int DetectString(Parser *p);
+extern "C" int DetectInteger(Parser *p);
 
 
 #endif /* Builtin_hpp */

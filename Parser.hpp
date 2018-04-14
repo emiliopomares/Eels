@@ -14,6 +14,10 @@
 #include "Builtin.hpp"
 #include "StreamReader.hpp"
 #include "Datatype.hpp"
+#include "Symboltype.hpp"
+
+#define SYMBOL_EMPTY -2
+#define SYMBOL_CHAR -1
 
 #define PARSER_EOB 0
 
@@ -25,7 +29,7 @@ private:
     long headIndex;
     char *buffer;
     StreamReader *reader;
-    Datatype headValue;
+    Symboltype headSymbol;
     
     
 public:
@@ -39,12 +43,13 @@ public:
     void AdvanceHead(int offset);
     long Offset();
     bool HeadIsEmpty();
-    int DetectInteger();
-    int DetectNonTerminal();
-    void push(Datatype symbol);
+    int ParserDetectInteger();
+    int ParserDetectNonTerminal();
+    void push(Symboltype symbol);
     std::string Extract();
-    void SetValueAtHead(Datatype d);
-    Datatype GetSymbol();
+    void SetSymbolAtHead(Symboltype s);
+    Symboltype GetSymbolAtHead();
+    void ClearHead();
     
 };
 

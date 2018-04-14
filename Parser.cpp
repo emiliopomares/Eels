@@ -7,6 +7,7 @@
 //
 
 #include "StreamReader.hpp"
+#include "Builtin.hpp"
 #include "Parser.hpp"
 #include <cstring>
 #include <cstdio>
@@ -20,7 +21,7 @@ Parser::Parser() {
     buffer = NULL;
     length = 0;
 
-    std::cout << "New parser created\n";
+    //std::cout << "New parser created\n";
     
 }
 
@@ -29,38 +30,40 @@ Parser::Parser(StreamReader *r) {
     
     reader = r;
 
-    headIndex = -1;
+    headIndex = 0;
     buffer = NULL;
-    length = 0;
+    length = r->Length();
 
-    std::cout << "New parser created\n";
+    headSymbol.symbol = SYMBOL_EMPTY;
+
+    //std::cout << "New parser created\n";
     
 }
 
-void Parser::SetValueAtHead(Datatype d) {
+void Parser::SetSymbolAtHead(Symboltype s) {
 
-    headValue = d;
-
-}
-
-void Parser::push(Datatype symbol) {
-
+    headSymbol = s;
 
 }
 
-Datatype Parser::GetSymbol() {
+void Parser::push(Symboltype symbol) {
 
-    return headValue;
-
-}
-
-int Parser::DetectInteger() {
-
-    return 0;
 
 }
 
-int Parser::DetectNonTerminal() {
+Symboltype Parser::GetSymbolAtHead() {
+
+    return headSymbol;
+
+}
+
+int Parser::ParserDetectInteger() {
+
+    return DetectInteger(this);
+
+}
+
+int Parser::ParserDetectNonTerminal() {
 
     return 0;
 
@@ -68,7 +71,7 @@ int Parser::DetectNonTerminal() {
 
 bool Parser::HeadIsEmpty() {
 
-    return true;
+    return headSymbol.symbol == SYMBOL_EMPTY;
 
 }
 
@@ -95,6 +98,7 @@ char Parser::GetChar() {
 char Parser::CharAt(int offset) {
     
     long effectiveOffset = headIndex + offset;
+    
     if(effectiveOffset < length)
         return reader->GetCharAt(effectiveOffset);
     
@@ -108,6 +112,12 @@ void Parser::AdvanceHead(int offset) {
     if(newIndex > length) newIndex = length;
     headIndex = newIndex;
     
+}
+
+void Parser::ClearHead() {
+
+    headSymbol.symbol = SYMBOL_EMPTY;
+
 }
 
 long Parser::Offset() {

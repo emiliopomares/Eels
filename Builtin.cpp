@@ -9,6 +9,14 @@
 #include "Builtin.hpp"
 #include "Parser.hpp"
 
+#include <iostream>
+
+bool IsValidDecDigit(char c) {
+
+    return (c>='0' && c<='9');
+
+}
+
 bool IsValidRangeCharacter(char c) {
     
     if(c>='A' && c<='Z') return true;
@@ -49,6 +57,21 @@ int DetectString(Parser *p) {
     }
 
     return 0;
+
+}
+
+int DetectInteger(Parser *p) {
+
+    //std::cout << "DetectInteger called char at 0 is: "<< p->CharAt(0) <<"\n";
+    if(IsValidDecDigit(p->CharAt(0))) {
+
+       // std::cout << "CharAt 0 ("<< p->CharAt(0) <<")is a valid digit \n";
+        int offset = 1;
+        while(IsValidDecDigit(p->CharAt(offset))) ++offset;
+        return offset;
+
+    }
+    else return 0;
 
 }
 

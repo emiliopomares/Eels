@@ -6,11 +6,20 @@
 
 class Sequence {
 
+private:
+	bool singleSegmentUsed;
+
 public:
-	Segment *singleSegment;	
-	std::vector<Sequence *> basicSegment;
+	Sequence();
+	Sequence(Segment *seg);
+	~Sequence();
+	Segment *baseCase;	
+	std::vector<Sequence *> segmentlist;
 	std::vector<Sequence *> disjuntive;
 	Qualifier q;
+	int NDisjuntives();
+	void AddSegment(Segment *s);
+	void print(int level);
 
 };
 

@@ -5,6 +5,8 @@ StateNode::StateNode(std::vector<Rule *>*rulelist) {
 	for(int i = 0; i < rulelist->size(); ++i) {
 
 		std::stack<RuleActivation *> *newStack = new std::stack<RuleActivation *>();
+		RuleActivation *newActiv = new RuleActivation(rulelist->at(i));
+		newStack->push(newActiv);
 		activation.push_back(newStack);
 
 	}
@@ -36,4 +38,10 @@ Rule *StateNode::GetRule(int i) {
 void StateNode::RemoveFromStack(int i) {
 
 	
+}
+
+RuleActivation *StateNode::GetActivation(int i) {
+
+	return activation[i]->top();
+
 }
