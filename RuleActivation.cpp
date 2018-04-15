@@ -5,8 +5,8 @@ RuleActivation::RuleActivation(Rule *r) {
 	for(int i = 0; i < r->GetBody()->NDisjuntives(); ++i) {
 
 		RuleActivationStatus sts;
-		sts.symbol = 0;
-		sts.subsymbol = 0;
+		sts.segment = 0;
+		sts.subsegment = 0;
 		branch.push_back(sts);
 
 	}
@@ -26,5 +26,11 @@ RuleActivationStatus RuleActivation::GetBranchActivation(int b) {
 void RuleActivation::SetBranchActivation(int b, RuleActivationStatus sts) {
 
 	branch[b] = sts;
+
+}
+
+Rule *RuleActivation::GetRule() {
+
+	return rule;
 
 }

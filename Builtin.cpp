@@ -37,7 +37,27 @@ int DetectLabelCharacter(Parser *p) {
     
 }
 
-/// Returns true if parser head is pointing at the beginning of a range
+bool IsValidStandardSpacer(char c) {
+
+    if (c==' ') return true;
+    if (c=='\n') return true;
+    if (c=='\r') return true;
+    if (c=='\t') return true;
+    return false;
+
+}
+
+/// Returns >0 is parser head is pointing at the beginning of a region comprised of blank characters [' ', '\n', '\r', '\t']
+int DetectStandardSpacers(Parser *p) {
+
+    int offset = 0;
+    while(IsValidStandardSpacer(p->CharAt(offset))) ++offset;
+    //std::cout << "call to detect... " << offset << " separators counted\n";
+    return offset;
+
+}
+
+/// Returns >0 if parser head is pointing at the beginning of a range
 int DetectRange(Parser *p) {
 
     if(IsValidRangeCharacter(p->CharAt(0)) && IsValidRangeCharacter(p->CharAt(2)) && p->CharAt(1)=='-') return 3;
@@ -62,16 +82,10 @@ int DetectString(Parser *p) {
 
 int DetectInteger(Parser *p) {
 
-    //std::cout << "DetectInteger called char at 0 is: "<< p->CharAt(0) <<"\n";
-    if(IsValidDecDigit(p->CharAt(0))) {
+    int offset = 0;
+     while(IsValidDecDigit(p->CharAt(offset))) ++offset;
+    return offset;
 
-       // std::cout << "CharAt 0 ("<< p->CharAt(0) <<")is a valid digit \n";
-        int offset = 1;
-        while(IsValidDecDigit(p->CharAt(offset))) ++offset;
-        return offset;
-
-    }
-    else return 0;
 
 }
 

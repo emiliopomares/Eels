@@ -15,13 +15,13 @@ StateNode::StateNode(std::vector<Rule *>*rulelist) {
 
 }
 
-void StateNode::AddRule() {
+// void StateNode::AddRule() {
 
-	Rule *newRule = new Rule();
-	std::stack<Rule *> newStack;
-	//newStack.
+// 	Rule *newRule = new Rule();
+// 	std::stack<Rule *> newStack;
+// 	//newStack.
 
-}
+// }
 
 int StateNode::NumRules() {
 

@@ -3,8 +3,8 @@
 
 struct RuleActivationStatus {
 
-	int symbol;
-	int subsymbol;
+	int segment;
+	int subsegment;
 
 };
 

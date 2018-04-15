@@ -63,6 +63,12 @@ int Parser::ParserDetectInteger() {
 
 }
 
+int Parser::ParserDetectStandardSpacers() {
+
+    return DetectStandardSpacers(this);
+
+}
+
 int Parser::ParserDetectNonTerminal() {
 
     return 0;

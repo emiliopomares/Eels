@@ -1,8 +1,11 @@
 #include "Rule.hpp"
+#include "RuleExecution.hpp"
 #include <iostream>
 
-Rule::Rule() {
+Rule::Rule(int nrule) {
 
+	isCompleted = false;
+	symbol_id = nrule;
 	body = new Sequence();
 
 }
@@ -13,7 +16,7 @@ void Rule::AddSegment(Segment *s) {
 
 }
 
-void Rule::SetAction(void (*f)(Rule *r, Engine *e, int pass)) {
+void Rule::SetAction(void (*f)(DataSequence *d, Engine *e, int pass)) {
 
 	onCompleted = f;
 
@@ -21,7 +24,13 @@ void Rule::SetAction(void (*f)(Rule *r, Engine *e, int pass)) {
 
 bool Rule::IsCompleted() {
 
-	return false;
+	return isCompleted;
+
+}
+
+void Rule::SetCompleted(bool c) {
+
+	isCompleted = c;
 
 }
 
@@ -40,7 +49,7 @@ Datatype Rule::GetData() {
 
 int Rule::GetIndex() {
 
-	return symbol_id+256;
+	return symbol_id;
 
 }
 

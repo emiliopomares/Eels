@@ -53,6 +53,8 @@ private:
 	int line;
 	std::string error;
 	int errorCode;
+	RuleActivationStatus matchSegmentToSymbol(Segment *seg, Symboltype sym, RuleActivationStatus stats);
+	RuleActivationStatus matchSequenceToSymbol(Sequence *seq, Symboltype sym, RuleActivationStatus stats);
 
 };
 

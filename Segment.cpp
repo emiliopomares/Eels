@@ -12,8 +12,19 @@ Segment::Segment(std::string lit) {
 
 	symbol_id = -1;
 	literal = lit;
-	literal_cstr = (char *)lit.c_str();
 	matchedCharacters = 0;
+
+}
+
+int Segment::GetSymbol() {
+
+	return symbol_id;
+
+}
+
+const char *Segment::GetLiteral() {
+
+	return literal.c_str();
 
 }
 

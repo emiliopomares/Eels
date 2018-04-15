@@ -45,6 +45,7 @@ public:
     bool HeadIsEmpty();
     int ParserDetectInteger();
     int ParserDetectNonTerminal();
+    int ParserDetectStandardSpacers();
     void push(Symboltype symbol);
     std::string Extract();
     void SetSymbolAtHead(Symboltype s);

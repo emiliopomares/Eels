@@ -22,6 +22,7 @@ public:
 	void SetBranchActivation(int b, RuleActivationStatus sts);
 	RuleState state;
 	int branchActivated;
+	Rule *GetRule();
 	
 
 };

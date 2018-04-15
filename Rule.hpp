@@ -7,6 +7,7 @@
 #include "RuleActivation.hpp"
 #include "RuleActivationStatus.hpp"
 #include "Engine.hpp"
+#include "DataSequence.hpp"
 
 class Engine;
 class Sequence;
@@ -14,22 +15,25 @@ class Sequence;
 class Rule {
 
 private:
-	static int nrules;
+
 	int symbol_id;
 	Sequence *body;
+	bool isCompleted;
 
 public:
-	Rule();
+
+	Rule(int nrule);
 	Datatype result;
-	void (*onCompleted)(Rule *r, Engine *e, int pass);
+	void (*onCompleted)(DataSequence *d, Engine *e, int pass);
 	void AddSegment(Segment *s);
-	void SetAction(void (*f)(Rule *r, Engine *e, int pass));
+	void SetAction(void (*f)(DataSequence *d, Engine *e, int pass));
 	Sequence *GetBody();
 	bool AttemptAdvance(RuleActivationStatus &act, int b);
 	bool IsCompleted();
 	int GetSymbol(); // TODO: Split Datatype and Symboltype (the latter being more lightweight)
 	Datatype GetData();
 	int GetIndex();
+	void SetCompleted(bool c);
 	void print(int level);
 
 };

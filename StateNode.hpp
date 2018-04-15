@@ -3,6 +3,7 @@
 
 #include "Rule.hpp"
 #include "RuleActivation.hpp"
+#include "RuleExecution.hpp"
 #include <vector>
 #include <stack>
 
@@ -19,7 +20,7 @@ public:
 	~StateNode();
 
 	int NumRules();
-	void AddRule();
+	//void AddRule();
 	Rule *GetRule(int i);
 	RuleActivation *GetActivation(int i);
 	void RemoveFromStack(int i);
@@ -27,6 +28,7 @@ public:
 	std::vector<std::stack<RuleActivation *> *> activation;
 	StateNode *sibling;
 
+	std::vector<RuleExecution *> execute;
 
 };
 

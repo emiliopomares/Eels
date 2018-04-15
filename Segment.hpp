@@ -21,6 +21,8 @@ public:
 	~Segment();
 	static Segment *Integer();
 	static Segment *Literal(std::string s);
+	int GetSymbol();
+	const char *GetLiteral();
 	void print(int level);
 
 };

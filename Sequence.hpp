@@ -19,6 +19,7 @@ public:
 	Qualifier q;
 	int NDisjuntives();
 	void AddSegment(Segment *s);
+	int NSegments();
 	void print(int level);
 
 };

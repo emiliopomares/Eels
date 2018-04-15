@@ -20,6 +20,19 @@ Sequence::~Sequence() {
 
 }
 
+// assuming there are no disjunctives. if there are, use Sequence::NSegments(int d)
+int Sequence::NSegments() {
+
+	if(baseCase == NULL) {
+
+		if(singleSegmentUsed == false) return 0;
+		return segmentlist.size();
+
+	}
+	return 1;
+
+}
+
 int Sequence::NDisjuntives() {
 
 	if(disjuntive.size() == 0) return 1;
