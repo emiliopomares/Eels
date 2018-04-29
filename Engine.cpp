@@ -110,6 +110,19 @@ Engine::Engine(StreamReader *strin, StreamWriter *strout) {
 
 }
 
+void Engine::ParentToNewChain() {
+
+	DataSequence *newSeq = new DataSequence(currentData);
+	currentData = newSeq;
+
+}
+
+void Engine::Chain(DataSequence *d) {
+
+	currentData->segmentlist->push_back(d);
+
+}
+
 RuleActivationStatus Engine::matchSegmentToSymbol(Segment *seg, Symboltype sym, RuleActivationStatus stats) {
 
 	RuleActivationStatus newActiv;
@@ -123,6 +136,9 @@ RuleActivationStatus Engine::matchSegmentToSymbol(Segment *seg, Symboltype sym, 
 
 			newActiv.segment = stats.segment+1;
 			newActiv.subsegment = 0;
+			std::string str = parser->Extract(true); // reset pointers
+			DataSequence *newDollar = new DataSequence(str, segmentSymbol);
+			Chain(newDollar);
 			//std::cout << "                      matched, newActiv.segment= " << newActiv.segment << ", newActiv.subsegment= " << newActiv.subsegment << " \n";
 			return newActiv;
 
@@ -145,6 +161,8 @@ RuleActivationStatus Engine::matchSegmentToSymbol(Segment *seg, Symboltype sym, 
 				newActiv.subsegment = stats.subsegment+1;
 				if(newActiv.subsegment == std::strlen(chars)) {
 
+					std::string str = parser->Extract(true); // reset pointers
+					Chain(newDollar);
 					newActiv.segment++;
 					newActiv.subsegment = 0;
 					return newActiv;

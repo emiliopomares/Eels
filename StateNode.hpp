@@ -4,6 +4,7 @@
 #include "Rule.hpp"
 #include "RuleActivation.hpp"
 #include "RuleExecution.hpp"
+#include "DataSequence.hpp"
 #include <vector>
 #include <stack>
 
@@ -14,6 +15,7 @@ class StateNode {
 
 private:
 	std::vector<Rule *>* rule;
+	DataSequence *dataNode;
 
 public:
 	StateNode(std::vector<Rule *>*rulelist);

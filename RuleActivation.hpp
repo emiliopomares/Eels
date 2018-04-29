@@ -3,6 +3,7 @@
 
 #include "Rule.hpp"
 #include "RuleActivationStatus.hpp"
+#include "DataSequence.hpp"
 
 class Rule;
 
@@ -15,6 +16,7 @@ class RuleActivation {
 private:
 	Rule *rule;
 	std::vector<RuleActivationStatus> branch;
+	DataSequence *dataSeq;
 
 public:
 	RuleActivation(Rule *r);

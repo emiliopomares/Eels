@@ -12,6 +12,7 @@ private:
 public:
 	DataSequence();
 	DataSequence(DataSegment *seg);
+	DataSequence(std::string extract, Datatype type);
 	~DataSequence();
 	DataSegment *baseCase;	
 	std::vector<DataSequence *> segmentlist;

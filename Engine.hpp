@@ -47,6 +47,7 @@ public:
 	StreamWriter *GetStreamWriter();
 
 private:
+	DataSequence *currentData;
 	StreamWriter *out;
 	std::vector<Rule *> rules;
 	int Step();
