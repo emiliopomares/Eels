@@ -2,6 +2,7 @@
 #define DATASEGMENT_DEF
 
 #include <string>
+#include "Datatype.hpp"
 
 
 class DataSegment {

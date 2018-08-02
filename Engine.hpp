@@ -46,6 +46,9 @@ public:
 
 	StreamWriter *GetStreamWriter();
 
+	void ParentToNewChain();
+	void Chain(DataSequence *d);
+
 private:
 	DataSequence *currentData;
 	StreamWriter *out;

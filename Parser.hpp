@@ -47,7 +47,7 @@ public:
     int ParserDetectNonTerminal();
     int ParserDetectStandardSpacers();
     void push(Symboltype symbol);
-    std::string Extract();
+    std::string Extract(bool resetPointers);
     void SetSymbolAtHead(Symboltype s);
     Symboltype GetSymbolAtHead();
     void ClearHead();

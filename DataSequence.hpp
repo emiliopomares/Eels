@@ -2,6 +2,7 @@
 #define DATASEQUENCE_DEF
 
 #include "DataSegment.hpp"
+#include "Qualifier.hpp"
 #include <vector>
 
 class DataSequence {

@@ -112,18 +112,18 @@ Engine::Engine(StreamReader *strin, StreamWriter *strout) {
 
 void Engine::ParentToNewChain() {
 
-	DataSequence *newSeq = new DataSequence(currentData);
-	currentData = newSeq;
+	//DataSequence *newSeq = new DataSequence(currentData);
+	//currentData = newSeq;
 
 }
 
 void Engine::Chain(DataSequence *d) {
 
-	currentData->segmentlist->push_back(d);
+	currentData->segmentlist.push_back(d);
 
 }
 
-RuleActivationStatus Engine::matchSegmentToSymbol(Segment *seg, Symboltype sym, RuleActivationStatus stats) {
+RuleActivationStatus Engine::matchSegmentToSymbol(Segment *seg, Symboltype sym, RuleActivationStatus stats) { // what is this for?!?
 
 	RuleActivationStatus newActiv;
 	int segmentSymbol = seg->GetSymbol();
@@ -137,7 +137,7 @@ RuleActivationStatus Engine::matchSegmentToSymbol(Segment *seg, Symboltype sym, 
 			newActiv.segment = stats.segment+1;
 			newActiv.subsegment = 0;
 			std::string str = parser->Extract(true); // reset pointers
-			DataSequence *newDollar = new DataSequence(str, segmentSymbol);
+			DataSequence *newDollar = new DataSequence(); //new DataSequence(str, segmentSymbol);
 			Chain(newDollar);
 			//std::cout << "                      matched, newActiv.segment= " << newActiv.segment << ", newActiv.subsegment= " << newActiv.subsegment << " \n";
 			return newActiv;
@@ -162,6 +162,7 @@ RuleActivationStatus Engine::matchSegmentToSymbol(Segment *seg, Symboltype sym, 
 				if(newActiv.subsegment == std::strlen(chars)) {
 
 					std::string str = parser->Extract(true); // reset pointers
+					DataSequence *newDollar = new DataSequence();
 					Chain(newDollar);
 					newActiv.segment++;
 					newActiv.subsegment = 0;
@@ -275,8 +276,8 @@ int Engine::Step() {
 
 	int skip;
 
-	if(parser->HeadIsEmpty()) {
-		//std::cout << "head was empty\n";
+	if(parser->HeadIsEmpty()) { // head empty
+		
 		// check short-cuts, makes parsing a lot faster
 		skip = parser->ParserDetectStandardSpacers();
 		if(skip > 0) {
@@ -327,7 +328,7 @@ int Engine::Step() {
 
 		}
 
-		// if all else fails...
+		// it is not a short-cut...
 
 		
 		Symboltype s;
@@ -339,8 +340,10 @@ int Engine::Step() {
 
 		if(s.c == PARSER_EOB) return PARSE_END;
 			else return PARSE_CONTINUE;
+
 	}
-	else {
+
+	else { // head non empty
 		Symboltype s = parser->GetSymbolAtHead();
 		if(s.symbol != -1) {
 			//std::cout << "head was not empty and it contained a symbol:" << s.symbol << "\n";

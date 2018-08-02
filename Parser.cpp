@@ -81,7 +81,7 @@ bool Parser::HeadIsEmpty() {
 
 }
 
-std::string Extract() {
+std::string Parser::Extract(bool resetPointers) {
 
     return "";
 
